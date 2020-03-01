@@ -11,6 +11,14 @@ class EventForm extends Component {
         hostedBy: ''
     };
 
+    componentDidMount() {
+        if (this.props.selectedEvent) {
+            this.setState({
+                ...this.props.selectedEvent
+            });
+        }
+    }
+
     handleInputChange = ({ target: { name, value } }) => {
         this.setState({
             [name]: value
@@ -19,7 +27,11 @@ class EventForm extends Component {
 
     handleOnSubmit = (event) => {
         event.preventDefault();
-        this.props.createEvent(this.state);
+        if (this.state.id) {
+            this.props.updateEvent(this.state);
+        } else {
+            this.props.createEvent(this.state);
+        }
     }
 
     render() {
